@@ -16,11 +16,10 @@ sklearn to demonstrate Information Retrieval using the Vector Space Model.
 
 ### Program:
 
-   ```
+```
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.tokenize import word_tokenize
@@ -32,7 +31,7 @@ documents = [
     "This is the first document.",
     "This document is the second document.",
     "And this is the third one.",
-    "Is this the fourth document?",
+    "Is this the first document?",
 ]
 
 # Preprocessing function to tokenize and remove stopwords/punctuation
@@ -40,6 +39,7 @@ def preprocess_text(text):
     tokens = word_tokenize(text.lower())
     tokens = [token for token in tokens if token not in stopwords.words("english") and token not in string.punctuation]
     return " ".join(tokens)
+    print(tokens)
 
 # Preprocess documents
 preprocessed_docs = [preprocess_text(doc) for doc in documents]
@@ -47,6 +47,7 @@ preprocessed_docs = [preprocess_text(doc) for doc in documents]
 # Construct TF-IDF matrix
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(preprocessed_docs)
+
 
 # Calculate cosine similarity between query and documents
 def search(query, tfidf_matrix, tfidf_vectorizer):
@@ -59,30 +60,27 @@ def search(query, tfidf_matrix, tfidf_vectorizer):
     # Sort documents based on similarity scores
     sorted_indexes = similarity_scores.argsort()[0][::-1]
 
-    # Return sorted documents along with their similarity scores and original indexes
-    results = [(documents[i], similarity_scores[0, i], i + 1) for i in sorted_indexes]  # Store original index (1-based)
+    # Return sorted documents along with their similarity scores
+    results = [(documents[i], similarity_scores[0, i]) for i in sorted_indexes]
     return results
-
 # Example query
-query = input("Enter query: ")
+query =input("Enter query: ")
 
 # Perform search
 search_results = search(query, tfidf_matrix, tfidf_vectorizer)
 
 # Display search results
-i = 1
+i=1
 for result in search_results:
     print("----------------------")
-    print("\nRank: ", i)
-    print("Document Number:", result[2])  # Use original document number
+    print("\nRank: ",i)
     print("Document:", result[0])
     print("Similarity Score:", result[1])
-    i += 1
 
-    ```
-### Output:
-![image](https://github.com/user-attachments/assets/e78d2eb7-feca-485e-8d76-a6bd5a9ca23c)
+    i=i+1
+```
+##output:
+![371722446-93a64921-c1ea-43bf-a783-145b61c9b1b2](https://github.com/user-attachments/assets/e729f527-7e9c-43c0-a7d0-62c6465176db)
 
-### Result:
-Thus, the implementation of Information Retrieval Using Vector Space Model in Python is executed successfully.
-
+ ##result:
+ Thus, the implementation of Information Retrieval Using Vector Space Model in Python is executed successfully.
